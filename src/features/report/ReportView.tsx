@@ -6,12 +6,12 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import type { ScanReport, Severity } from "@/shared/types/index.js";
-import { StatsBar, type StatsFilter } from "./StatsBar.js";
-import { RuleOverview } from "./RuleOverview.js";
-import { HitList } from "./HitList.js";
-import { RuleOverviewSkeleton, HitListSkeleton } from "./ReportSkeleton.js";
-import { exportToExcel, exportToJson } from "./exportReport.js";
+import type { ScanReport, Severity } from "@/shared/types/index";
+import { StatsBar, type StatsFilter } from "./StatsBar";
+import { RuleOverview } from "./RuleOverview";
+import { HitList } from "./HitList";
+import { RuleOverviewSkeleton, HitListSkeleton } from "./ReportSkeleton";
+import { exportToExcel, exportToJson } from "./exportReport";
 
 interface ReportViewProps {
   report: ScanReport;

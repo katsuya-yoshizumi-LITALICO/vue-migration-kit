@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import type { ScanHit, Severity } from "@/shared/types/index.js";
-import { SeverityBadge } from "@/shared/components/SeverityBadge.js";
+import type { ScanHit, Severity } from "@/shared/types/index";
+import { SeverityBadge } from "@/shared/components/SeverityBadge";
 import {
   groupHitsByFile,
   filterHitsBySeverity,
   sortHitsBySeverity,
-} from "./reportUtils.js";
+} from "./reportUtils";
 
 interface HitListProps {
   hits: ScanHit[];

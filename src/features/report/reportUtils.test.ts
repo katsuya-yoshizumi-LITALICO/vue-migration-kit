@@ -1,12 +1,12 @@
 import { describe, it, expect } from "vitest";
-import type { ScanHit, ScanReport, RuleSummary } from "@/shared/types/index.js";
+import type { ScanHit, ScanReport, RuleSummary } from "@/shared/types/index";
 import {
   groupHitsByFile,
   filterHitsBySeverity,
   getTopRules,
   formatDuration,
   sortHitsBySeverity,
-} from "./reportUtils.js";
+} from "./reportUtils";
 
 function createHit(
   overrides: Partial<ScanHit> = {},

@@ -1,5 +1,5 @@
 import ExcelJS from "exceljs";
-import type { ScanReport } from "./types.js";
+import type { ScanReport } from "./types";
 
 const severityFill: Record<string, Partial<ExcelJS.Fill>> = {
   error: {

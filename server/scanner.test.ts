@@ -8,7 +8,7 @@ import {
   findHitsInContent,
   buildRulesSummary,
   countBySeverity,
-} from "./scanner.js";
+} from "./scanner";
 
 function createTmpDir(): string {
   return fs.mkdtempSync(path.join(os.tmpdir(), "scanner-test-"));

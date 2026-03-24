@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
-import type { ScanReport, Severity } from "@/shared/types/index.js";
-import { formatDuration } from "./reportUtils.js";
+import type { ScanReport, Severity } from "@/shared/types/index";
+import { formatDuration } from "./reportUtils";
 
 export type StatsFilter = Severity | "all" | "files";
 

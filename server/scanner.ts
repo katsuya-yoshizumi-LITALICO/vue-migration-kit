@@ -1,12 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
-import { rules } from "./rules.js";
+import { rules } from "./rules";
 import type {
   ScanHit,
   ScanReport,
   RuleSummary,
   SeverityCount,
-} from "./types.js";
+} from "./types";
 
 export interface SfcParts {
   template: string;

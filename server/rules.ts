@@ -1,4 +1,4 @@
-import type { Severity } from "./types.js";
+import type { Severity } from "./types";
 
 export interface RulePattern {
   re: RegExp;

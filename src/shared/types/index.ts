@@ -7,4 +7,4 @@ export type {
   ScanRequest,
   ScanResponse,
   ScanErrorResponse,
-} from "../../../server/types.js";
+} from "../../../server/types";

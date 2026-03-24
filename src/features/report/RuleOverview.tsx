@@ -1,5 +1,5 @@
-import type { RuleSummary, Severity } from "@/shared/types/index.js";
-import { groupRulesByCategory } from "./reportUtils.js";
+import type { RuleSummary, Severity } from "@/shared/types/index";
+import { groupRulesByCategory } from "./reportUtils";
 
 interface RuleOverviewProps {
   rulesSummary: RuleSummary[];

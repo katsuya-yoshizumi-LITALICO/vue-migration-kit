@@ -1,5 +1,5 @@
 import { saveAs } from "file-saver";
-import type { ScanReport } from "@/shared/types/index.js";
+import type { ScanReport } from "@/shared/types/index";
 
 function buildFileName(report: ScanReport, ext: string): string {
   const dirName = report.targetDir.replace(/[/\\:*?"<>|]/g, "_");

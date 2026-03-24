@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import type { Severity } from "../types/index.js";
+import type { Severity } from "../types/index";
 
 const variantMap: Record<Severity, string> = {
   error: "bg-severity-error/15 text-severity-error border-severity-error/25",

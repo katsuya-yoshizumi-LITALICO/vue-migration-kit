@@ -1,4 +1,4 @@
-import type { ScanHit, RuleSummary, Severity, ScanReport } from "@/shared/types/index.js";
+import type { ScanHit, RuleSummary, Severity, ScanReport } from "@/shared/types/index";
 
 export function groupHitsByFile(hits: ScanHit[]): Map<string, ScanHit[]> {
   const map = new Map<string, ScanHit[]>();

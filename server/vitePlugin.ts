@@ -4,9 +4,9 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { execSync } from "node:child_process";
-import { runScan } from "./scanner.js";
-import type { ScanReport, ScanResponse, ScanErrorResponse } from "./types.js";
-import { generateExcel } from "./exportExcel.js";
+import { runScan } from "./scanner";
+import type { ScanReport, ScanResponse, ScanErrorResponse } from "./types";
+import { generateExcel } from "./exportExcel";
 
 function readBody(req: IncomingMessage): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -185,6 +185,122 @@ export function createScannerApiPlugin(): Plugin {
         });
       };
 
+      // GET /api/targets — return targets.json content
+      const targetsHandler: Connect.NextHandleFunction = (req, res, next) => {
+        if (req.method !== "GET") {
+          next();
+          return;
+        }
+
+        const targetsPath = path.resolve(import.meta.dirname, "..", "targets.json");
+        if (!fs.existsSync(targetsPath)) {
+          respondJson(res, 404, { ok: false, error: "targets.json not found" });
+          return;
+        }
+
+        try {
+          const content = fs.readFileSync(targetsPath, "utf-8");
+          const targets = JSON.parse(content) as string[];
+          res.setHeader("Content-Type", "application/json");
+          res.statusCode = 200;
+          res.end(JSON.stringify({ ok: true, targets }));
+        } catch (e) {
+          respondJson(res, 500, {
+            ok: false,
+            error: e instanceof Error ? e.message : "Unknown error",
+          });
+        }
+      };
+
+      // POST /api/scan-targets — scan directories listed in targets.json from parent dir
+      const scanTargetsHandler: Connect.NextHandleFunction = (req, res, next) => {
+        if (req.method !== "POST") {
+          next();
+          return;
+        }
+
+        void readBody(req).then((body) => {
+          try {
+            const parsed = JSON.parse(body) as { targets: string[] };
+            const parentDir = path.resolve(import.meta.dirname, "..", "..");
+            const results: { name: string; report: ScanReport }[] = [];
+            const errors: string[] = [];
+
+            for (const name of parsed.targets) {
+              const targetDir = path.join(parentDir, name);
+              if (!fs.existsSync(targetDir)) {
+                errors.push(`${name}: directory not found`);
+                continue;
+              }
+              try {
+                const report = runScan({ targetDir });
+                report.targetDir = name;
+                results.push({ name, report });
+              } catch (e) {
+                errors.push(
+                  `${name}: ${e instanceof Error ? e.message : "Unknown error"}`,
+                );
+              }
+            }
+
+            res.setHeader("Content-Type", "application/json");
+            res.statusCode = 200;
+            res.end(
+              JSON.stringify({
+                ok: true,
+                reports: results.map((r) => r.report),
+                errors,
+              }),
+            );
+          } catch (e) {
+            respondJson(res, 500, {
+              ok: false,
+              error: e instanceof Error ? e.message : "Unknown error",
+            });
+          }
+        });
+      };
+
+      // POST /api/export-to-exports — save reports as xlsx to exports/ directory
+      const exportToExportsHandler: Connect.NextHandleFunction = (req, res, next) => {
+        if (req.method !== "POST") {
+          next();
+          return;
+        }
+
+        void readBody(req).then((body) => {
+          void (async () => {
+            try {
+              const parsed = JSON.parse(body) as { reports: ScanReport[] };
+              const exportsDir = path.resolve(import.meta.dirname, "..", "exports");
+              if (!fs.existsSync(exportsDir)) {
+                fs.mkdirSync(exportsDir, { recursive: true });
+              }
+
+              const saved: string[] = [];
+              for (const report of parsed.reports) {
+                const fileName = report.targetDir.replace(/[/\\:*?"<>|]/g, "_") + ".xlsx";
+                const buffer = await generateExcel(report);
+                fs.writeFileSync(path.join(exportsDir, fileName), buffer);
+                saved.push(fileName);
+              }
+
+              res.setHeader("Content-Type", "application/json");
+              res.statusCode = 200;
+              res.end(JSON.stringify({ ok: true, saved }));
+            } catch (e) {
+              respondJson(res, 500, {
+                ok: false,
+                error: e instanceof Error ? e.message : "Unknown error",
+              });
+            }
+          })();
+        });
+      };
+
+      server.middlewares.use("/api/export-to-exports", exportToExportsHandler);
+      server.middlewares.use("/api/targets", targetsHandler);
+      server.middlewares.use("/api/scan-targets", scanTargetsHandler);
       server.middlewares.use("/api/export-excel", exportHandler);
       server.middlewares.use("/api/scan-files", filesHandler);
       server.middlewares.use("/api/scan-zip", zipHandler);

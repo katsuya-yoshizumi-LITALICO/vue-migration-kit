@@ -1,0 +1,18 @@
+[
+  "taraf-commons-ui-lib",
+  "taraf-commons-ui",
+  "taraf-communication-admin-ui",
+  "taraf-communication-reschedule-ui",
+  "taraf-communication-reservation-ui",
+  "taraf-config-ui",
+  "taraf-hnavi-scheduler-ui",
+  "taraf-iep-process-ui",
+  "taraf-lj-functions-ui",
+  "taraf-lj-scheduler-ui",
+  "taraf-management-simulation-ui",
+  "taraf-rezept-bill-ui",
+  "taraf-support-process-ui",
+  "taraf-upper-management-ui",
+  "taraf-user-charge-ui",
+  "taraf-welfare-contract-ui"
+]
