@@ -45,7 +45,7 @@ export async function generateExcel(report: ScanReport): Promise<Buffer> {
   const summary = wb.addWorksheet("サマリー");
   summary.columns = [{ width: 24 }, { width: 50 }];
 
-  const titleRow = summary.addRow(["Vue Migration Kit - スキャンレポート"]);
+  const titleRow = summary.addRow(["レポート"]);
   titleRow.font = { bold: true, size: 14 };
   summary.mergeCells("A1:B1");
 
