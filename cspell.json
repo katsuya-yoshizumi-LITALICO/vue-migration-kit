@@ -1,0 +1,17 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "nuxt",
+    "vuex",
+    "pinia",
+    "vitest",
+    "unmounted",
+    "asyncdata",
+    "scopedslots",
+    "ruleId",
+    "jsdom",
+    "tseslint"
+  ],
+  "ignorePaths": ["node_modules", "dist", "package-lock.json"]
+}
