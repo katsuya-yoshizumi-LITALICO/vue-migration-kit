@@ -113,8 +113,154 @@ export const rules: Rule[] = [
     ],
     docs: "https://v3-migration.vuejs.org/breaking-changes/v-on-native-modifier-removed.html",
   },
+  {
+    id: "deep_selector",
+    category: "Vue 2 廃止API",
+    severity: "error",
+    label: "/deep/ / >>> セレクタ",
+    patterns: [
+      { re: /\/deep\//gmu, desc: "/deep/ セレクタ" },
+      { re: />>>/gmu, desc: ">>> セレクタ" },
+      { re: /::v-deep(?!\()/gmu, desc: "::v-deep（引数なし）" },
+    ],
+    docs: "https://vuejs.org/api/sfc-css-features.html#deep-selectors",
+  },
+  {
+    id: "transition_classes",
+    category: "Vue 2 廃止API",
+    severity: "error",
+    label: "transition クラス名変更",
+    patterns: [
+      { re: /\.v-enter\b(?!-)/gmu, desc: ".v-enter → .v-enter-from に変更" },
+      { re: /\.v-leave\b(?!-)/gmu, desc: ".v-leave → .v-leave-from に変更" },
+      { re: /enter-class\s*=/gmu, desc: "enter-class → enter-from-class に変更" },
+      { re: /leave-class\s*=/gmu, desc: "leave-class → leave-from-class に変更" },
+    ],
+    docs: "https://v3-migration.vuejs.org/breaking-changes/transition.html",
+  },
+  {
+    id: "keycode_modifiers",
+    category: "Vue 2 廃止API",
+    severity: "error",
+    label: "keyCode 修飾子",
+    patterns: [
+      { re: /@keyup\.\d+/gmu, desc: "数値 keyCode 修飾子の使用" },
+      { re: /@keydown\.\d+/gmu, desc: "数値 keyCode 修飾子の使用" },
+      { re: /@keypress\.\d+/gmu, desc: "数値 keyCode 修飾子の使用" },
+      { re: /Vue\.config\.keyCodes/gmu, desc: "Vue.config.keyCodes の使用" },
+    ],
+    docs: "https://v3-migration.vuejs.org/breaking-changes/keycode-modifiers.html",
+  },
+  {
+    id: "inline_template",
+    category: "Vue 2 廃止API",
+    severity: "error",
+    label: "inline-template",
+    patterns: [
+      { re: /\binline-template\b/gmu, desc: "inline-template 属性の使用" },
+    ],
+    docs: "https://v3-migration.vuejs.org/breaking-changes/inline-template-attribute.html",
+  },
+  {
+    id: "destroy_method",
+    category: "Vue 2 廃止API",
+    severity: "error",
+    label: "$destroy",
+    patterns: [
+      { re: /\.\$destroy\s*\(/gmu, desc: "$destroy() の使用" },
+    ],
+    docs: "https://v3-migration.vuejs.org/breaking-changes/",
+  },
+  {
+    id: "hook_events",
+    category: "Vue 2 廃止API",
+    severity: "error",
+    label: "$on('hook:') パターン",
+    patterns: [
+      { re: /\$on\s*\(\s*['"`]hook:/gmu, desc: "$on('hook:...') パターン" },
+      { re: /\$once\s*\(\s*['"`]hook:/gmu, desc: "$once('hook:...') パターン" },
+    ],
+    docs: "https://v3-migration.vuejs.org/breaking-changes/vnode-lifecycle-events.html",
+  },
+  {
+    id: "render_function",
+    category: "Vue 2 廃止API",
+    severity: "error",
+    label: "render(h) 旧API",
+    patterns: [
+      { re: /render\s*\(\s*h\b/gmu, desc: "render(h) — h は import { h } from 'vue' に変更" },
+    ],
+    docs: "https://v3-migration.vuejs.org/breaking-changes/render-function-api.html",
+  },
+  {
+    id: "props_data",
+    category: "Vue 2 廃止API",
+    severity: "error",
+    label: "propsData 廃止",
+    patterns: [
+      { re: /propsData\s*:/gmu, desc: "propsData オプションの使用" },
+    ],
+    docs: "https://v3-migration.vuejs.org/breaking-changes/props-data.html",
+  },
 
   // ── Vue 2 廃止API（severity: warning）──
+  {
+    id: "custom_directive_hooks",
+    category: "Vue 2 廃止API",
+    severity: "warning",
+    label: "カスタムディレクティブ hooks",
+    patterns: [
+      { re: /\bbind\s*\(\s*el/gmu, desc: "bind() → beforeMount() に変更" },
+      { re: /\binserted\s*\(\s*el/gmu, desc: "inserted() → mounted() に変更" },
+      { re: /\bcomponentUpdated\s*\(\s*el/gmu, desc: "componentUpdated() → updated() に変更" },
+      { re: /\bunbind\s*\(\s*el/gmu, desc: "unbind() → unmounted() に変更" },
+    ],
+    docs: "https://v3-migration.vuejs.org/breaking-changes/custom-directives.html",
+  },
+  {
+    id: "v_if_v_for",
+    category: "Vue 2 廃止API",
+    severity: "warning",
+    label: "v-if / v-for 同一要素",
+    patterns: [
+      { re: /v-for\s*=.*v-if\s*=/gmu, desc: "v-for と v-if が同一要素（優先順位が変更）" },
+      { re: /v-if\s*=.*v-for\s*=/gmu, desc: "v-if と v-for が同一要素（優先順位が変更）" },
+    ],
+    docs: "https://v3-migration.vuejs.org/breaking-changes/v-if-v-for.html",
+  },
+  {
+    id: "tree_shakable_api",
+    category: "グローバルAPI変更",
+    severity: "warning",
+    label: "Vue.nextTick 等",
+    patterns: [
+      { re: /Vue\.nextTick/gmu, desc: "Vue.nextTick → import { nextTick } from 'vue'" },
+      { re: /Vue\.observable/gmu, desc: "Vue.observable → import { reactive } from 'vue'" },
+      { re: /Vue\.version/gmu, desc: "Vue.version → import { version } from 'vue'" },
+      { re: /Vue\.compile/gmu, desc: "Vue.compile は削除" },
+    ],
+    docs: "https://v3-migration.vuejs.org/breaking-changes/global-api-treeshaking.html",
+  },
+  {
+    id: "data_object",
+    category: "Vue 2 廃止API",
+    severity: "warning",
+    label: "data オブジェクト直書き",
+    patterns: [
+      { re: /\bdata\s*:\s*\{/gmu, desc: "data はオブジェクトではなく関数で返す必要がある" },
+    ],
+    docs: "https://v3-migration.vuejs.org/breaking-changes/data-option.html",
+  },
+  {
+    id: "transition_group_root",
+    category: "Vue 2 廃止API",
+    severity: "warning",
+    label: "TransitionGroup ラッパー",
+    patterns: [
+      { re: /<transition-group(?![^>]*\btag\b)/gmu, desc: "transition-group に tag 属性が必要（デフォルトラッパーが廃止）" },
+    ],
+    docs: "https://v3-migration.vuejs.org/breaking-changes/transition-group.html",
+  },
   {
     id: "children",
     category: "Vue 2 廃止API",
@@ -207,6 +353,31 @@ export const rules: Rule[] = [
     docs: "https://nuxt.com/docs/migration/plugins-and-middleware",
   },
 
+  {
+    id: "nuxt_component",
+    category: "Nuxt 2 固有",
+    severity: "error",
+    label: "<Nuxt> / <NuxtChild>",
+    patterns: [
+      { re: /<Nuxt\s*\/?>/gmu, desc: "<Nuxt /> → <slot /> に変更（layouts内）" },
+      { re: /<NuxtChild/gmu, desc: "<NuxtChild /> → <NuxtPage /> に変更" },
+      { re: /<nuxt-child/gmu, desc: "<nuxt-child /> → <NuxtPage /> に変更" },
+      { re: /<nuxt\s*\/?>/gmu, desc: "<nuxt /> → <slot /> に変更（layouts内）" },
+    ],
+    docs: "https://nuxt.com/docs/migration/pages-and-layouts",
+  },
+  {
+    id: "watch_query",
+    category: "Nuxt 2 固有",
+    severity: "error",
+    label: "watchQuery",
+    patterns: [
+      { re: /watchQuery\s*:/gmu, desc: "watchQuery は Nuxt 3 で廃止" },
+      { re: /watchQuery\s*\(/gmu, desc: "watchQuery は Nuxt 3 で廃止" },
+    ],
+    docs: "https://nuxt.com/docs/migration/pages-and-layouts",
+  },
+
   // ── Nuxt 2 固有（severity: warning）──
   {
     id: "nuxt_store",
@@ -235,6 +406,51 @@ export const rules: Rule[] = [
       },
     ],
     docs: "https://nuxt.com/docs/migration/plugins-and-middleware",
+  },
+  {
+    id: "this_router_route",
+    category: "Nuxt 2 固有",
+    severity: "warning",
+    label: "this.$router / this.$route",
+    patterns: [
+      { re: /this\.\$router/gmu, desc: "this.$router → useRouter() に変更" },
+      { re: /this\.\$route/gmu, desc: "this.$route → useRoute() に変更" },
+    ],
+    docs: "https://nuxt.com/docs/migration/plugins-and-middleware",
+  },
+  {
+    id: "process_env",
+    category: "Nuxt 2 固有",
+    severity: "warning",
+    label: "process.env",
+    patterns: [
+      { re: /process\.env\./gmu, desc: "process.env → useRuntimeConfig() に変更" },
+    ],
+    docs: "https://nuxt.com/docs/migration/configuration#runtime-config",
+  },
+  {
+    id: "server_middleware",
+    category: "Nuxt Config",
+    severity: "warning",
+    label: "serverMiddleware",
+    patterns: [
+      { re: /serverMiddleware\s*:/gmu, desc: "serverMiddleware → server/api/ ディレクトリに移行" },
+    ],
+    docs: "https://nuxt.com/docs/migration/server",
+  },
+
+  // ── Vue 2 変更（severity: info）──
+  {
+    id: "v_model_breaking",
+    category: "Vue 2 廃止API",
+    severity: "info",
+    label: "v-model 変更",
+    patterns: [
+      { re: /v-model\.trim/gmu, desc: "v-model 修飾子の動作確認が必要" },
+      { re: /:value\s*=.*@input\s*=/gmu, desc: "value/input パターン → v-model に統一可能" },
+      { re: /model\s*:\s*\{\s*prop\s*:/gmu, desc: "model オプション → defineModel() に変更" },
+    ],
+    docs: "https://v3-migration.vuejs.org/breaking-changes/v-model.html",
   },
 
   // ── Nuxt 2 固有（severity: info）──

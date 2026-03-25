@@ -11,7 +11,13 @@
     "scopedslots",
     "ruleId",
     "jsdom",
-    "tseslint"
+    "tseslint",
+    "keyup",
+    "keydown",
+    "keypress",
+    "keyCodes",
+    "propsData",
+    "treeshaking"
   ],
   "ignorePaths": ["node_modules", "dist", "package-lock.json"]
 }
