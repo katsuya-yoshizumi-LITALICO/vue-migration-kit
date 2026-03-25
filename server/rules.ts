@@ -443,7 +443,7 @@ export const rules: Rule[] = [
   {
     id: "v_model_breaking",
     category: "Vue 2 廃止API",
-    severity: "info",
+    severity: "error",
     label: "v-model 変更",
     patterns: [
       { re: /v-model\.trim/gmu, desc: "v-model 修飾子の動作確認が必要" },

@@ -26,6 +26,7 @@ Vue 3 / Nuxt 3 で**廃止された API**。そのままではビルドエラー
 | Nuxt Context | `$nuxt`, `context.app`, `app.$xxx` |
 | `<Nuxt>` / `<NuxtChild>` | `<Nuxt />` → `<slot />`, `<NuxtChild />` → `<NuxtPage />` |
 | watchQuery | `watchQuery` は Nuxt 3 で廃止 |
+| v-model 変更 | `v-model` 修飾子, `value`/`input` パターン, `model` オプション — prop/event 名が変わり暗黙に壊れる |
 
 ## Warning（対応を推奨）
 
@@ -59,7 +60,6 @@ Vue 3 / Nuxt 3 で**廃止された API**。そのままではビルドエラー
 
 | ルール | 検出対象 |
 |---|---|
-| v-model 変更 | `v-model` 修飾子, `value`/`input` パターン, `model` オプション |
 | layout オプション | `layout: 'name'` |
 | middleware | `middleware: 'name'` |
 | head() | `head(){}`, `head:{}` |
