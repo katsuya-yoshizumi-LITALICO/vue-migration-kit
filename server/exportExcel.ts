@@ -54,9 +54,9 @@ export async function generateExcel(report: ScanReport): Promise<Buffer> {
   styleHeader(sh);
 
   const items: [string, string | number][] = [
-    ["スキャン日時", report.generatedAt],
+    ["計測日時", report.generatedAt],
     ["対象ディレクトリ", report.targetDir],
-    ["スキャンファイル数", report.scannedFiles],
+    ["調査ファイル数", report.scannedFiles],
     ["検出合計", report.totalHits],
     ["Error", report.severity.error],
     ["Warning", report.severity.warning],
